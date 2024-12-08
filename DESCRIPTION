@@ -1,0 +1,24 @@
+Package: PopScape
+Type: Package
+Title: R package for fitting and running landscape-scale population models
+Version: 1.0.0
+Authors@R: c(
+    person("Ilya", "Maclean", email = "i.m.d.maclean@exeter.ac.uk", role = "cre"))
+Maintainer: Ilya M. D. Maclean <i.m.d.maclean@exeter.ac.uk>
+Description: Versatile open-source framework to run, visualise and interact with 
+  spatial models, including population and meta-population models composed of 
+  modular rules.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+LinkingTo: Rcpp 
+Imports: 
+    Rcpp,
+    terra
+Depends: 
+    R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
