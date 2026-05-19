@@ -4,7 +4,7 @@
 #include <queue>
 using namespace Rcpp;
 // =========================================================================== #
-// ~~~~~~~~~~~ Calculate habitat suitability-weighted distances between ~~~~~~~~~~ #
+// ~~~~~~~~~~~ Calculate habitat suitability-weighted distances between ~~~~~~ #
 // ~~~~~~~~~~~~~~ habitat patches, averaged across pixels ~~~~~~~~~~~~~~~~~~~~ #
 // =========================================================================== #
 // [[Rcpp::export]]
@@ -314,13 +314,14 @@ IntegerVector PopSim_one(IntegerVector Nt, IntegerVector K,
     for (int i = 0; i < pops; ++i) {
         if (Nt[i] > 0) {
             double lambda = birthrate[i] * survival[i];
-            double n = Nt[i];
+            int n = Nt[i];
             NumericVector ind = rpois(n, lambda);
             int tot = 0;
             for (int j = 0; j < n; ++j) tot += ind[j];
-            double mu = (1.0 - static_cast<double>(Nt[i]) / K[i]);
-            double val = (tot - Nt[i]) * mu + Nt[i];
-            N[i] = static_cast<int>(val);
+            double mu = std::max(0.0,
+                1.0 - static_cast<double>(Nt[i]) / K[i]);
+            double val = tot * mu;
+            N[i] = static_cast<int>(std::round(val));
         }
     }
     // Simulate immigration and emmigration
