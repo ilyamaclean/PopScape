@@ -318,9 +318,12 @@ IntegerVector PopSim_one(IntegerVector Nt, IntegerVector K,
             NumericVector ind = rpois(n, lambda);
             int tot = 0;
             for (int j = 0; j < n; ++j) tot += ind[j];
-            double mu = std::max(0.0,
-                1.0 - static_cast<double>(Nt[i]) / K[i]);
-            double val = tot * mu;
+            double delta = tot - Nt[i];
+            if (delta > 0) {
+                delta *= std::max(0.0,
+                    1.0 - static_cast<double>(Nt[i]) / K[i]);
+            }
+            double val = Nt[i] + delta;
             N[i] = static_cast<int>(std::round(val));
         }
     }
